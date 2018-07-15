@@ -238,19 +238,51 @@ int sendUInt(unsigned int val, unsigned char base)
 
 	switch(base)
 	{
-		case 2: sendString("0b",2);break;
-		case 8: sendString("0o",2);break;
-		case 10: sendString("0d",2);break;
-		case 16: sendString("0x",2);break;
+		case 2:
+			sendString("0b",2);
+			for(i = 0; i < 16; i++)
+			{
+				tmp[i] = val % base;
+				val = val/base;
+				sendCharCount++;
+			}
+			break;
+		case 8:
+			sendString("0o",2);
+			for(i = 0; i < 6; i++)
+			{
+				tmp[i] = val % base;
+				val = val/base;
+				sendCharCount++;
+			}
+			break;
+		case 10: 
+			sendString("0d",2);
+			while( val >= base || val != 0)
+			{
+				tmp[i++] = val % base;
+				val = val/base;
+				sendCharCount++;
+			}
+
+			if( sendCharCount == 0 )
+			{
+				tmp[i++] = '0';
+				sendCharCount++;
+			}
+			break;
+		case 16:
+			sendString("0x",2);
+			for(i = 0; i < 4; i++)
+			{
+				tmp[i] = val % base;
+				val = val/base;
+				sendCharCount++;
+			}
+			break;
 		default: sendString("ud",2);break;
 	}
 
-	while( val >= base || val != 0)
-	{
-		tmp[i++] = val % base;
-		val = val/base;
-		sendCharCount++;
-	}
 
 	for(i = sendCharCount-1; i >= 0; i--)
 	{

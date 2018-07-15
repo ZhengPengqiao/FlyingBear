@@ -6,6 +6,12 @@
  ******************************************************************************/
 #include "LED.h"
 
+#if ACTIVITY_STATUS
+	unsigned char ledstatus = 0xFF;
+#else
+	unsigned char ledstatus = 0x00;
+#endif
+
 /*******************************************************************************
  * 函数名称 : setLedOn
  * 函数介绍 : 点亮指定小灯
@@ -15,9 +21,9 @@
 void setLedOn(unsigned char num)
 {
 	#if ACTIVITY_STATUS
-		LEDDATA |= (1 << num);
+		ledstatus |= (1 << num);
 	#else
-		LEDDATA &= ~(1 << num);
+		ledstatus &= ~(1 << num);
 	#endif
 }
  
@@ -30,9 +36,9 @@ void setLedOn(unsigned char num)
 void setLedOff(unsigned char num)
 {
 	#if ACTIVITY_STATUS
-		LEDDATA &= ~(1 << num);
+		ledstatus &= ~(1 << num);
 	#else
-		LEDDATA |= (1 << num);
+		ledstatus |= (1 << num);
 	#endif
 }
  
@@ -45,9 +51,9 @@ void setLedOff(unsigned char num)
 void setAllLedOn()
 {
 	#if ACTIVITY_STATUS
-    	LEDDATA = 0xFF;
+    	ledstatus = 0xFF;
 	#else
-    	LEDDATA = 0x00;
+    	ledstatus = 0x00;
 	#endif
 }
  
@@ -60,9 +66,9 @@ void setAllLedOn()
 void setAllLedOff()
 {
 	#if ACTIVITY_STATUS
-    	LEDDATA = 0x00;
+    	ledstatus = 0x00;
 	#else
-    	LEDDATA = 0xFF;
+    	ledstatus = 0xFF;
 	#endif
 }
  /*******************************************************************************
@@ -73,7 +79,7 @@ void setAllLedOff()
  ******************************************************************************/
 void setAllLedToggle()
 {
-	LEDDATA = ~LEDDATA;
+	ledstatus = ~LEDDATA;
 }
  
  /*******************************************************************************
@@ -84,13 +90,13 @@ void setAllLedToggle()
  ******************************************************************************/
 void setLedToggle(unsigned char num)
 {
-	if( (LEDDATA & (1 << num)) )
+	if( (ledstatus & (1 << num)) )
 	{
-		LEDDATA &= ~(1 << num);
+		ledstatus &= ~(1 << num);
 	}
 	else
 	{
-		LEDDATA |= (1 << num);
+		ledstatus |= (1 << num);
 	}
 }
 
@@ -104,8 +110,20 @@ void setLedToggle(unsigned char num)
 void setAllLed(unsigned char allLed)
 {
 	#if ACTIVITY_STATUS
-    	LEDDATA = allLed;
+    	ledstatus = allLed;
 	#else
-    	LEDDATA = ~allLed;
+    	ledstatus = ~allLed;
 	#endif
+}
+
+
+ /*******************************************************************************
+ * 函数名称 : ledUpdate
+ * 函数介绍 : 更新小灯状态
+ * 参数介绍 : 无
+ * 返回值  :  无
+ ******************************************************************************/
+void ledUpdate()
+{
+	LEDDATA = ledstatus;
 }

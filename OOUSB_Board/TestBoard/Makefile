@@ -1,5 +1,5 @@
 #找到所有的源文件
-SRC := main.c  ./UART/UART.c ./KEY/KEY.c ./LED/LED.c
+SRC := main.c  ./UART/UART.c ./KEY/KEY.c ./LED/LED.c ./TIMER/TIMER.c
 
 #找到所有的头文件路径
 INCLUDE := $(shell find ./ -name "*.h")

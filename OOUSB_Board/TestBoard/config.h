@@ -12,7 +12,7 @@
 
 /**
  * @brief 定义工程中使用的引脚
- * 
+ * LED灯引脚
  */
 #define ACTIVITY_STATUS 0
 #define LEDDATA P2
@@ -25,8 +25,10 @@
 #define LED7    P2_6
 #define LED8    P2_7
 
-
-//按键引脚
+/**
+ * @brief 定义工程中使用的引脚
+ * 按键引脚
+ */
 #define KEYIN0        P1_0
 #define KEYIN1        P1_1
 #define KEYIN2        P1_2
@@ -50,6 +52,14 @@
 #define uint64 unsigned long long int
 #define int64 signed long long int
 
+
+/**
+ * @brief 定义定时器任务的数量
+ * 可以使用的任务数为timer0TaskCount+1，有一个用于任务切换
+ */
+#define timer0TaskCount 10
+
+
 /**
  * @brief 定义uart软件缓冲区的大小
  * 
@@ -58,6 +68,10 @@
 #define TX_BUFFER_SIZE 50    //UART发送缓冲区大小
 
 
+/**
+ * @brief 定时晶振时钟，定义串口波特率
+ * 
+ */
 #define SYSCLK 11059200UL /*使用11.0592M晶体*/
 #define BITRATE 9600UL  /*波特率定义为9600*/
 
